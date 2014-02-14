@@ -1,0 +1,223 @@
+# --- Global Settings --- #
+
+accounting syslog
+accounting file = /var/log/tacacs_acct.log
+
+
+
+# --- Network Authentication Servers --- #
+
+# Host-specific configuration
+host = 192.168.40.15 {
+    # address =
+    key = "{{ tacacs_key }}"
+    prompt = "
+
+Using TACACS+ for AAA
+
+Username: "
+}
+
+
+
+# --- ACLs --- #
+
+# Broken up by type of device
+
+# All network devices
+acl = all {
+    permit = 192\.168\.40\.
+}
+
+# Access layer switches
+acl = access_switches {
+    # C2960-1.1
+    permit = 192\.168\.40\.241
+
+    # C2960-1.2
+    permit = 192\.168\.40\.242
+
+    # C2960-1.3
+    permit = 192\.168\.40\.243
+
+    # C2960-2.1
+    permit = 192\.168\.40\.244
+
+    # C2960-3.1
+    permit = 192\.168\.40\.245
+
+    # C2960-3.2
+    permit = 192\.168\.40\.246
+
+    permit = 192\.168\.40\.15
+}
+
+# Routers
+acl = routers {
+    # 2911 Voice Gateway router
+    permit = 192\.168\.40\.3
+
+    # C3750
+    permit = 192\.168\.40\.240
+
+    # 2911 in Dev
+    permit = 192\.168\.67\.2[12]
+}
+
+# Firewalls
+acl = firewalls {
+    permit = 192\.168\.40\.
+}
+
+# N5Ks
+acl = n5ks {
+    permit = 192\.168\.40\.
+}
+
+# UCS Fabric Extenders
+acl = ucsfx {
+    permit = 192\.168\.40\.
+}
+
+
+
+# --- Groups --- #
+
+group = enterprise_admin {
+    default service = permit
+    login = PAM
+    acl = all
+
+    # Default login exec level
+    service = exec {
+      priv-lvl = 15
+      idletime = 0.5
+    }
+
+}
+
+group = access_admin {
+    default service = deny
+    login = PAM
+    acl = access_switches
+
+    # Default login exec level
+    service = exec {
+      priv-lvl = 15
+    }
+
+    cmd = enable {
+        permit .*
+    }
+
+    cmd = show {
+        permit int.*
+        permit ip.*
+        permit priv.*
+    }
+
+    cmd = exit {
+        permit .*
+    }
+
+    cmd = configure {
+        permit .*
+    }
+
+    cmd = interface {
+        # Don't allow modification of trunk links
+        deny "GigabitEthernet [0-9]/[0-9]/(49|50|51|52)"
+        deny "FastEthernet [0-9]/[0-9]/(49|50|51|52)"
+
+        permit "FastEthernet.*"
+        permit "GigabitEthernet.*"
+        permit shutdown
+    }
+
+    cmd = switchport  {
+        permit "access vlan.*"
+        permit "trunk encapsulation.*"
+        permit "mode.*"
+        permit "trunk allowed vlan.*"
+    }
+
+    cmd = description {
+        permit .*
+    }
+
+    cmd = no {
+        permit shutdown
+    }
+
+}
+
+group = router_admin {
+    default service = deny
+    login = PAM
+    acl = routers
+
+    # Default login exec level
+    service = exec {
+      priv-lvl = 1
+    }
+
+    cmd = ip {
+        permit .*
+    }
+}
+
+group = firewall_admin {
+    default service = deny
+    login = PAM
+    acl = firewalls
+
+    # Commands
+}
+
+group = n5k_admin {
+    default service = deny
+    login = PAM
+    acl = n5ks
+
+    # Commands
+
+}
+
+group = ucs_admin {
+    default service = deny
+    login = PAM
+    acl = ucsfx
+
+    # Commands
+
+}
+
+
+
+# --- Users --- #
+
+user = sdoran {
+    login = PAM
+    member = enterprise_admin
+    enable = des BFEpAFi0GT8KU
+}
+
+user = fred {
+    login = PAM
+    enable = cleartext "fredsecret"
+    member = access_admin
+}
+
+# User account configured for use with "rancid"
+user = rancid {
+    login = PAM
+    service = exec {
+        priv-lvl = 15
+    }
+
+    cmd = show { permit .* }
+    cmd = exit { permit .* }
+    cmd = dir { permit .* }
+    cmd = write { permit term }
+
+}
