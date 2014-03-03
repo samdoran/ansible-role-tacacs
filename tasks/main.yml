@@ -1,4 +1,6 @@
 ---
+- include: account_settings.yml
+
 - name: Copy nux-misc repo
   copy: src=nux-misc.repo dest=/etc/yum.repos.d/nux-misc.repo owner=root group=root mode=0644
   tags: [ 'tacacs' , 'yum' , 'nux' ]
@@ -14,4 +16,4 @@
 - name: Copy tacacas config
   template: src=etc-tac_plus.conf.j2 dest=/etc/tac_plus.conf owner=root group=root mode=0640
   notify: restart tac_plus
-  tags: [ 'tacacs' , 'config' ]
+  tags: [ 'tacacs' , 'tacacsconfig' ]

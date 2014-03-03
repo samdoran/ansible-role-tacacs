@@ -1,3 +1,15 @@
 ---
-tacacs_key: FOO
+2911_key: pxCvai@PVA8gjvDKWa@8
+tacacs_key: pxCvai@PVA8gjvDKWa@8
+2960_key:
+3750_key:
+ucs_key:
+pp_asa_key:
+p10_asa_key:
 tacacs_port: 49
+
+password_max_days: 90
+password_min_days: 7
+password_min_length: 15
+passwords_to_remember: 13
+password_complexity: 'minlen=15 ucredit=-2 lcredit=-2 dcredit=-2 ocretid=-2'

@@ -1,0 +1,34 @@
+---
+# Configure password aging and complexity
+- name: Set password maximum age
+  lineinfile: "state=present dest=/etc/login.defs regexp='^PASS_MAX_DAYS' line='PASS_MAX_DAYS\t{{ password_max_days }}'"
+  tags: [ 'accountconfig' ]
+
+- name: Set password minimum age
+  lineinfile: "state=present dest=/etc/login.defs regexp='^PASS_MIN_DAYS' line='PASS_MIN_DAYS\t{{ password_min_days }}'"
+  tags: [ 'accountconfig' ]
+
+- name: Set password minimum length
+  lineinfile: "state=present dest=/etc/login.defs regexp='^PASS_MIN_LEN' line='PASS_MIN_LEN\t{{ password_min_length }}'"
+  tags: [ 'accountconfig' ]
+
+- name: Set default umask to 077
+  lineinfile: "state=present dest=/etc/login.defs regexp='^UMASK' line='UMASK\t077'"
+  tags: [ 'accountconfig' ]
+
+- name: Set password complexity requirements
+  lineinfile: state=present dest=/etc/pam.d/system-auth-ac regexp='^password\s+requisite\s+pam_cracklib.so' line='password    requisite     pam_cracklib.so try_first_pass retry=3 {{ password_complexity }}'
+  tags: [ 'accountconfig' ]
+
+- name: Prevent reuse of passwords
+  lineinfile: state=present dest=/etc/pam.d/system-auth-ac regexp='^password\s+sufficient\s+pam_unix.so' line='password    sufficient    pam_unix.so sha512 shadow nullok try_first_pass use_authtok remember={{ passwords_to_remember }}'
+  tags: [ 'accountconfig' ]
+
+- name: Lock accounts after expiration
+  lineinfile:
+    state=present
+    dest=/etc/default/useradd
+    regexp='^INACTIVE'
+    line='INACTIVE=7'
+  tags: [ 'accountconfig' ]
+

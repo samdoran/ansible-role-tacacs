@@ -2,20 +2,19 @@
 
 accounting syslog
 accounting file = /var/log/tacacs_acct.log
+key = "{{ tacacs_key }}"
 
 
 
 # --- Network Authentication Servers --- #
 
 # Host-specific configuration
-host = 192.168.40.15 {
-    # address =
+host = 192.168.67.21 {
     key = "{{ tacacs_key }}"
-    prompt = "
+}
 
-Using TACACS+ for AAA
-
-Username: "
+host = 192.168.67.22 {
+    key = "{{ tacacs_key }}"
 }
 
 
@@ -27,6 +26,8 @@ Username: "
 # All network devices
 acl = all {
     permit = 192\.168\.40\.
+    permit = 192\.168\.67\.
+    permit = 10\.255\.255\.
 }
 
 # Access layer switches
@@ -60,8 +61,9 @@ acl = routers {
     # C3750
     permit = 192\.168\.40\.240
 
-    # 2911 in Dev
+    # 2911s in Dev
     permit = 192\.168\.67\.2[12]
+    permit = 192\.168\.64\.253
 }
 
 # Firewalls
@@ -91,9 +93,7 @@ group = enterprise_admin {
     # Default login exec level
     service = exec {
       priv-lvl = 15
-      idletime = 0.5
     }
-
 }
 
 group = access_admin {
@@ -106,22 +106,16 @@ group = access_admin {
       priv-lvl = 15
     }
 
-    cmd = enable {
-        permit .*
-    }
+    # Basic commands
+    cmd = enable { permit .* }
+    cmd = exit { permit .* }
+    cmd = configure { permit .* }
 
+    # Group specific commands
     cmd = show {
         permit int.*
         permit ip.*
         permit priv.*
-    }
-
-    cmd = exit {
-        permit .*
-    }
-
-    cmd = configure {
-        permit .*
     }
 
     cmd = interface {
@@ -148,22 +142,24 @@ group = access_admin {
     cmd = no {
         permit shutdown
     }
-
 }
 
 group = router_admin {
-    default service = deny
+    default service = permit
     login = PAM
     acl = routers
 
     # Default login exec level
     service = exec {
-      priv-lvl = 1
+      priv-lvl = 15
     }
 
-    cmd = ip {
-        permit .*
-    }
+    # Basic commands
+    cmd = enable { permit .* }
+    cmd = exit { permit .* }
+    cmd = configure { permit .* }
+
+    # Group specific commands
 }
 
 group = firewall_admin {
@@ -171,7 +167,17 @@ group = firewall_admin {
     login = PAM
     acl = firewalls
 
-    # Commands
+    # Default login exec level
+    service = exec {
+      priv-lvl = 15
+    }
+
+    # Basic commands
+    cmd = enable { permit .* }
+    cmd = exit { permit .* }
+    cmd = configure { permit .* }
+
+    # Group specific commands
 }
 
 group = n5k_admin {
@@ -179,8 +185,17 @@ group = n5k_admin {
     login = PAM
     acl = n5ks
 
-    # Commands
+    # Default login exec level
+    service = exec {
+      priv-lvl = 15
+    }
 
+    # Basic commands
+    cmd = enable { permit .* }
+    cmd = exit { permit .* }
+    cmd = configure { permit .* }
+
+    # Group specific commands
 }
 
 group = ucs_admin {
@@ -188,8 +203,39 @@ group = ucs_admin {
     login = PAM
     acl = ucsfx
 
-    # Commands
+    # Default login exec level
+    service = exec {
+      priv-lvl = 15
+    }
 
+    # Basic commands
+    cmd = enable { permit .* }
+    cmd = exit { permit .* }
+    cmd = configure { permit .* }
+
+    # Group specific commands
+}
+
+group = reader {
+    default service = deny
+    login = PAM
+    acl = all
+
+    # Default login exec level
+    service = exec {
+      priv-lvl = 1
+    }
+
+    # Basic commands
+    cmd = enable { permit .* }
+    cmd = exit { permit .* }
+
+    # Group specific commands
+    cmd = show {
+        deny (running|startup)-config
+        permit .*
+    }
+    cmd = exit { permit .* }
 }
 
 
@@ -199,13 +245,23 @@ group = ucs_admin {
 user = sdoran {
     login = PAM
     member = enterprise_admin
-    enable = des BFEpAFi0GT8KU
+}
+
+user = tbadawy {
+    login = PAM
+    member = enterprise_admin
+}
+
+user = ljennison {
+    login = PAM
+    member = enterprise_admin
 }
 
 user = fred {
     login = PAM
-    enable = cleartext "fredsecret"
-    member = access_admin
+    # enable = cleartext "secret12#"
+    member = reader
+    expires = "Feb 26 2014"
 }
 
 # User account configured for use with "rancid"
