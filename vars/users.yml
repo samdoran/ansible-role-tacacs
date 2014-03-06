@@ -1,0 +1,35 @@
+---
+foo_users:
+  - name: anthony
+    groups: wheel
+    state: present
+    key: "{{ anthony_key }}"
+
+  - name: awheeler
+    groups:
+    state: present
+    shell: /bin/rbash
+    key: "{{ awheeler_key }}"
+
+  - name: ljennison
+    groups:
+    state: present
+    shell: /bin/rbash
+    key: "{{ ljennison_key }}"
+
+  - name: rob
+    groups: infosec
+    state: present
+    shell: /bin/rbash
+    key: "{{ rob_key }}"
+
+  - name: sdoran
+    groups: wheel
+    state: present
+    key: "{{ sdoran_key }}"
+
+  - name: tbadway
+    groups:
+    state: present
+    shell: /bin/rbash
+    key: "{{ tbadway_key }}"

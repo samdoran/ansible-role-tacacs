@@ -1,5 +1,6 @@
 ---
 - include: account_settings.yml
+- include: user_accounts.yml
 
 - name: Copy nux-misc repo
   copy: src=nux-misc.repo dest=/etc/yum.repos.d/nux-misc.repo owner=root group=root mode=0644
@@ -17,3 +18,11 @@
   template: src=etc-tac_plus.conf.j2 dest=/etc/tac_plus.conf owner=root group=root mode=0640
   notify: restart tac_plus
   tags: [ 'tacacs' , 'tacacsconfig' ]
+
+- name: Setup rbash
+  file: state=link src=/bin/bash dest=/bin/rbash owner=root group=root mode=0755
+  tags: [ 'config' ]
+
+- name: Add rbash to /etc/shells
+  lineinfile: state=present dest=/etc/shells line='/bin/rbash'
+  tags: [ 'config' ]

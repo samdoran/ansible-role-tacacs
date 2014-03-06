@@ -10,11 +10,11 @@ key = "{{ tacacs_key }}"
 
 # Host-specific configuration
 host = 192.168.67.21 {
-    key = "{{ tacacs_key }}"
+    key = "{{ c2911_key }}"
 }
 
 host = 192.168.67.22 {
-    key = "{{ tacacs_key }}"
+    key = "{{ c2911_key }}"
 }
 
 
@@ -245,16 +245,31 @@ group = reader {
 user = sdoran {
     login = PAM
     member = enterprise_admin
+    expires = "May 27, 2014"
+}
+
+user = anthony {
+    login = PAM
+    member = enterprise_admin
+    expires = "May 27, 2014"
+}
+
+user = rob {
+    login = PAM
+    member = enterprise_admin
+    expires = "May 27, 2014"
 }
 
 user = tbadawy {
     login = PAM
     member = enterprise_admin
+    expires = "Feb 25, 2014"
 }
 
 user = ljennison {
     login = PAM
-    member = enterprise_admin
+    member = reader
+    expires = "May 27, 2014"
 }
 
 user = fred {

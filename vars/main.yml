@@ -1,11 +1,4 @@
 ---
-2911_key: pxCvai@PVA8gjvDKWa@8
-tacacs_key: pxCvai@PVA8gjvDKWa@8
-2960_key:
-3750_key:
-ucs_key:
-pp_asa_key:
-p10_asa_key:
 tacacs_port: 49
 
 password_max_days: 90
