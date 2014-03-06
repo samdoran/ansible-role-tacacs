@@ -1,18 +1,19 @@
 ---
-foo_users:
+users:
   - name: anthony
     groups: wheel
     state: present
+    shell: /bin/bash
     key: "{{ anthony_key }}"
 
   - name: awheeler
-    groups:
+    groups: users
     state: present
     shell: /bin/rbash
     key: "{{ awheeler_key }}"
 
   - name: ljennison
-    groups:
+    groups: users
     state: present
     shell: /bin/rbash
     key: "{{ ljennison_key }}"
@@ -26,10 +27,11 @@ foo_users:
   - name: sdoran
     groups: wheel
     state: present
+    shell: /usr/bin/fish
     key: "{{ sdoran_key }}"
 
-  - name: tbadway
-    groups:
+  - name: tbadawy
+    groups: users
     state: present
     shell: /bin/rbash
-    key: "{{ tbadway_key }}"
+    key: "{{ tbadawy_key }}"
