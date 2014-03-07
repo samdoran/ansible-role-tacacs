@@ -9,13 +9,20 @@ key = "{{ tacacs_key }}"
 # --- Network Authentication Servers --- #
 
 # Host-specific configuration
-host = 192.168.67.21 {
-    key = "{{ c2911_key }}"
-}
+# Cisco 2911s
+host = 192.168.67.21 { key = "{{ c2911_key }}" }
+host = 192.168.67.22 { key = "{{ c2911_key }}" }
 
-host = 192.168.67.22 {
-    key = "{{ c2911_key }}"
-}
+# Cisco Catalyst 2960s
+host = 192.168.40.241 { key = "{{ c2960_key }}" }
+host = 192.168.40.242 { key = "{{ c2960_key }}" }
+host = 192.168.40.243 { key = "{{ c2960_key }}" }
+host = 192.168.40.244 { key = "{{ c2960_key }}" }
+host = 192.168.40.245 { key = "{{ c2960_key }}" }
+host = 192.168.40.246 { key = "{{ c2960_key }}" }
+
+# Cisco Catalyst 3750
+host = 192.168.40.240 { key = "{{ c3750_key }}" }
 
 
 
@@ -263,7 +270,7 @@ user = rob {
 user = tbadawy {
     login = PAM
     member = enterprise_admin
-    expires = "Feb 25, 2014"
+    expires = "May 25, 2014"
 }
 
 user = ljennison {
