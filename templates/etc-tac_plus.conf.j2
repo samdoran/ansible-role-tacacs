@@ -290,5 +290,7 @@ user = rancid {
     cmd = exit { permit .* }
     cmd = dir { permit .* }
     cmd = write { permit term }
+    cmd = terminal { permit (length|width) }
+    cmd = more { permit .* }
 
 }
