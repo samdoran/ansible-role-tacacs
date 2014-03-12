@@ -5,21 +5,21 @@ aaa authentication fail-message ^C
 Authentication failure. This incident has been logged.
 
 ^C
-#
+
 # Authentication configuration
 #
 aaa authentication password-prompt "LOCAL Password: "
 aaa authentication username-prompt "LOCAL Username: "
-aaa authentication login default local group tacacs+
+aaa authentication login default group tacacs+ local
 aaa authentication enable default group tacacs+ enable
 
 # Authorization configuration
 #
 aaa authorization config-commands
-aaa authorization exec default local group tacacs+
-aaa authorization commands 0 default local group tacacs+
-aaa authorization commands 1 default local group tacacs+
-aaa authorization commands 15 default local group tacacs+
+aaa authorization exec default group tacacs+ local
+aaa authorization commands 0 default group tacacs+ local
+aaa authorization commands 1 default group tacacs+ local
+aaa authorization commands 15 default group tacacs+ local
 
 # Accounting Configuration
 #
