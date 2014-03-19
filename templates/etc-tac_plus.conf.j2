@@ -24,6 +24,9 @@ host = 192.168.40.246 { key = "{{ c2960_key }}" }
 # Cisco Catalyst 3750
 host = 10.255.255.6 { key = "{{ c3750_key }}" }
 
+# Dell 5316M in InfoSec blade chassis
+host = 192.168.23.239 { key = "{{ d5316m_key }}" }
+
 
 
 # --- ACLs --- #
@@ -35,6 +38,7 @@ acl = all {
     permit = 192\.168\.40\.24[1-6]
     permit = 192\.168\.67\.2[12]
     permit = 10\.255\.255\.
+    permit = 192\.168\.23\.239
 }
 
 # Access layer switches
