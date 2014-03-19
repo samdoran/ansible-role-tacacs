@@ -22,7 +22,7 @@ host = 192.168.40.245 { key = "{{ c2960_key }}" }
 host = 192.168.40.246 { key = "{{ c2960_key }}" }
 
 # Cisco Catalyst 3750
-host = 192.168.40.240 { key = "{{ c3750_key }}" }
+host = 10.255.255.6 { key = "{{ c3750_key }}" }
 
 
 
@@ -32,8 +32,8 @@ host = 192.168.40.240 { key = "{{ c3750_key }}" }
 
 # All network devices
 acl = all {
-    permit = 192\.168\.40\.
-    permit = 192\.168\.67\.
+    permit = 192\.168\.40\.24[1-6]
+    permit = 192\.168\.67\.2[12]
     permit = 10\.255\.255\.
 }
 
@@ -56,8 +56,6 @@ acl = access_switches {
 
     # C2960-3.2
     permit = 192\.168\.40\.246
-
-    permit = 192\.168\.40\.15
 }
 
 # Routers
@@ -66,7 +64,7 @@ acl = routers {
     permit = 192\.168\.40\.3
 
     # C3750
-    permit = 192\.168\.40\.240
+    permit = 10\.255\.255\.6$
 
     # 2911s in Dev
     permit = 192\.168\.67\.2[12]
@@ -137,9 +135,7 @@ group = access_admin {
 
     cmd = switchport  {
         permit "access vlan.*"
-        permit "trunk encapsulation.*"
         permit "mode.*"
-        permit "trunk allowed vlan.*"
     }
 
     cmd = description {
@@ -252,31 +248,36 @@ group = reader {
 user = sdoran {
     login = PAM
     member = enterprise_admin
-    expires = "Jun 04, 2014"
 }
 
 user = anthony {
     login = PAM
     member = enterprise_admin
-    expires = "Jun 04, 2014"
+}
+
+user = tbladmin {
+    login = PAM
+    member = enterprise_admin
 }
 
 user = rob {
     login = PAM
     member = enterprise_admin
-    expires = "May 27, 2014"
 }
 
 user = tbadawy {
     login = PAM
-    member = enterprise_admin
-    expires = "May 25, 2014"
+    member = access_admin
 }
 
 user = ljennison {
     login = PAM
     member = reader
-    expires = "May 27, 2014"
+}
+
+user = awheeler {
+    login = PAM
+    member = reader
 }
 
 # User account configured for use with "rancid"
