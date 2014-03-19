@@ -1,10 +1,9 @@
+# Specify a source interface that matches the TACACS ACL
+#
+ip tacacs source-interface [interface]
+
 # These commands must be in the IOS config
 aaa new-model
-aaa authentication fail-message ^C
-
-Authentication failure. This incident has been logged.
-
-^C
 
 # Authentication configuration
 #
@@ -39,7 +38,3 @@ tacacs server ryl_tacacs
  address ipv4 [ip]
  key 0 [key]
  single-connection
-
-# Specify a source interface that matches the TACACS ACL
-#
-ip tacacs source-interface [interface]
