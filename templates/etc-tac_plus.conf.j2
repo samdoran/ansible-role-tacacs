@@ -118,6 +118,7 @@ group = access_admin {
     # Basic commands
     cmd = enable { permit .* }
     cmd = exit { permit .* }
+    cmd = end { permit .* }
     cmd = configure { permit .* }
 
     # Group specific commands
@@ -134,12 +135,11 @@ group = access_admin {
 
         permit "FastEthernet.*"
         permit "GigabitEthernet.*"
-        permit shutdown
     }
 
     cmd = switchport  {
         permit "access vlan.*"
-        permit "mode.*"
+        permit "mode access"
     }
 
     cmd = description {
@@ -148,7 +148,10 @@ group = access_admin {
 
     cmd = no {
         permit shutdown
+        permit "switchport mode access"
     }
+
+    cmd = shutdown { permit .* }
 }
 
 group = router_admin {
@@ -164,6 +167,7 @@ group = router_admin {
     # Basic commands
     cmd = enable { permit .* }
     cmd = exit { permit .* }
+    cmd = end { permit .* }
     cmd = configure { permit .* }
 
     # Group specific commands
@@ -182,6 +186,7 @@ group = firewall_admin {
     # Basic commands
     cmd = enable { permit .* }
     cmd = exit { permit .* }
+    cmd = end { permit .* }
     cmd = configure { permit .* }
 
     # Group specific commands
@@ -200,6 +205,7 @@ group = n5k_admin {
     # Basic commands
     cmd = enable { permit .* }
     cmd = exit { permit .* }
+    cmd = end { permit .* }
     cmd = configure { permit .* }
 
     # Group specific commands
@@ -218,6 +224,7 @@ group = ucs_admin {
     # Basic commands
     cmd = enable { permit .* }
     cmd = exit { permit .* }
+    cmd = end { permit .* }
     cmd = configure { permit .* }
 
     # Group specific commands
@@ -236,13 +243,12 @@ group = reader {
     # Basic commands
     cmd = enable { permit .* }
     cmd = exit { permit .* }
+    cmd = end { permit .* }
 
     # Group specific commands
     cmd = show {
-        deny (running|startup)-config
         permit .*
     }
-    cmd = exit { permit .* }
 }
 
 
