@@ -127,6 +127,7 @@ group = access_admin {
         permit int.*
         permit ip.*
         permit priv.*
+        permit running-config
     }
 
     cmd = interface {
@@ -153,6 +154,12 @@ group = access_admin {
     }
 
     cmd = shutdown { permit .* }
+
+    cmd = do {
+        permit show (int|ip|priv|running-config).*
+        permit switchport ("access vlan"|"mode access").*
+        permit description.*
+    }
 }
 
 group = router_admin {
