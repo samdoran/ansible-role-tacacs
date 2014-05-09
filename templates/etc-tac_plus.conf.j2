@@ -156,9 +156,9 @@ group = access_admin {
     cmd = shutdown { permit .* }
 
     cmd = do {
-        permit show (int|ip|priv|running-config).*
-        permit switchport ("access vlan"|"mode access").*
-        permit description.*
+        permit "show (int|ip|priv|running-config).*"
+        permit "switchport (access vlan|mode access).*"
+        permit "description.*"
     }
 }
 
