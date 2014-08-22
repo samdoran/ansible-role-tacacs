@@ -1,7 +1,4 @@
 ---
-- include: account_settings.yml
-- include: user_accounts.yml
-
 - name: Copy nux-misc repo
   copy: src=nux-misc.repo dest=/etc/yum.repos.d/nux-misc.repo owner=root group=root mode=0644
   tags: [ 'tacacs' , 'yum' , 'nux' ]

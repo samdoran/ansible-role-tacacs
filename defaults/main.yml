@@ -1,2 +1,8 @@
 ---
 tacacs_port: 49
+
+# User accounts in /etc/tac_plus.conf
+# group needs to match a group defined in /etc/tac_plus.conf
+tacacs_config_users:
+  - name: rancid
+    group: reader

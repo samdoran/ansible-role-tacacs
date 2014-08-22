@@ -259,77 +259,35 @@ group = reader {
     }
 }
 
-
-
-# --- Users --- #
-
-user = sdoran {
+group = scanner {
+    default service = deny
     login = PAM
-    member = enterprise_admin
-}
+    acl = all
 
-user = anthony {
-    login = PAM
-    member = enterprise_admin
-}
-
-user = tbladmin {
-    login = PAM
-    member = enterprise_admin
-}
-
-user = rob {
-    login = PAM
-    member = enterprise_admin
-}
-
-user = tbadawy {
-    login = PAM
-    member = access_admin
-}
-
-user = ljennison {
-    login = PAM
-    member = reader
-}
-
-user = awheeler {
-    login = PAM
-    member = reader
-}
-
-user = mrenner {
-    login = PAM
-    member = access_admin
-}
-
-user = tcunningham {
-    login = PAM
-    member = access_admin
-}
-
-user = mlanghorst {
-    login = PAM
-    member = access_admin
-}
-
-user = cchong {
-    login = PAM
-    member = access_admin
-}
-
-# User account configured for use with "rancid"
-user = rancid {
-    login = PAM
+    # Default login exec level
     service = exec {
-        priv-lvl = 15
+      priv-lvl = 15
     }
 
-    cmd = show { permit .* }
+    # Basic commands
+    cmd = enable { permit .* }
     cmd = exit { permit .* }
+    cmd = end { permit .* }
+
+    # Group specific commands
+    cmd = show { permit .* }
     cmd = dir { permit .* }
     cmd = write { permit term }
     cmd = terminal { permit (length|width) }
     cmd = more { permit .* }
-
 }
+
+
+
+# --- Users --- #
+{% for item in tacacs_config_users %}
+user = {{ item.name }} {
+    login = PAM
+    member = {{ item.group }}
+}
+{% endfor %}
