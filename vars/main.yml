@@ -1,8 +1,1 @@
 ---
-tacacs_port: 49
-
-password_max_days: -1
-password_min_days: -1
-password_min_length: 10
-passwords_to_remember: 5
-password_complexity: 'minlen=10 ucredit=-1 lcredit=-1 dcredit=-1'
