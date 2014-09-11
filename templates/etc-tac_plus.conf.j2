@@ -10,8 +10,8 @@ key = "{{ tacacs_key }}"
 
 # Host-specific configuration
 # Cisco 2911s
-host = 192.168.67.21 { key = "{{ c2911_key }}" }
-host = 192.168.67.22 { key = "{{ c2911_key }}" }
+host = 10.255.255.26 { key = "{{ c2911_key }}" }
+host = 10.255.255.27 { key = "{{ c2911_key }}" }
 
 # Cisco Catalyst 2960s
 host = 192.168.40.241 { key = "{{ c2960_key }}" }
@@ -37,7 +37,6 @@ host = 192.168.23.239 { key = "{{ d5316m_key }}" }
 # All network devices
 acl = all {
     permit = 192\.168\.40\.24[1-6]
-    permit = 192\.168\.67\.2[12]
     permit = 10\.255\.255\.
     permit = 192\.168\.23\.23[89]
 }
@@ -71,9 +70,8 @@ acl = routers {
     # C3750
     permit = 10\.255\.255\.6$
 
-    # 2911s in Dev
-    permit = 192\.168\.67\.2[12]
-    permit = 192\.168\.64\.253
+    # 2911s at Peak 10
+    permit = 10\.255\.255\.2[67]$
 }
 
 # Firewalls
