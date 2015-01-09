@@ -28,6 +28,9 @@ host = 10.255.255.10 { key = "{{ c3750_key }}" }
 host = 192.168.23.238 { key = "{{ d5316m_key }}" }
 host = 192.168.23.239 { key = "{{ d5316m_key }}" }
 
+# Cisco Pix
+host = 172.16.1.1 { key = "{{ pix_key }}" }
+
 
 
 # --- ACLs --- #
@@ -39,6 +42,7 @@ acl = all {
     permit = 192\.168\.40\.24[1-6]
     permit = 10\.255\.255\.
     permit = 192\.168\.23\.23[89]
+    permit = 172\.16\.1\.1$
 }
 
 # Access layer switches
@@ -77,6 +81,7 @@ acl = routers {
 # Firewalls
 acl = firewalls {
     permit = 192\.168\.40\.
+    permit = 172\.16\.1\.1$
 }
 
 # N5Ks
