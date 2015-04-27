@@ -20,6 +20,7 @@ host = 192.168.40.243 { key = "{{ c2960_key }}" }
 host = 192.168.40.244 { key = "{{ c2960_key }}" }
 host = 192.168.40.245 { key = "{{ c2960_key }}" }
 host = 192.168.40.246 { key = "{{ c2960_key }}" }
+host = 192.168.40.247 { key = "{{ c2960_key }}" }
 
 # Cisco Catalyst 3750
 host = 10.255.255.10 { key = "{{ c3750_key }}" }
@@ -43,7 +44,7 @@ host = 172.16.1.1 { enable = des {{ firewall_enable_password }} }
 
 # All network devices
 acl = all {
-    permit = 192\.168\.40\.24[1-6]
+    permit = 192\.168\.40\.[0-9]+
     permit = 10\.255\.255\.
     permit = 192\.168\.23\.
     permit = 172\.16\.1\.1$
@@ -51,23 +52,8 @@ acl = all {
 
 # Access layer switches
 acl = access_switches {
-    # C2960-1.1
-    permit = 192\.168\.40\.241
-
-    # C2960-1.2
-    permit = 192\.168\.40\.242
-
-    # C2960-1.3
-    permit = 192\.168\.40\.243
-
-    # C2960-2.1
-    permit = 192\.168\.40\.244
-
-    # C2960-3.1
-    permit = 192\.168\.40\.245
-
-    # C2960-3.2
-    permit = 192\.168\.40\.246
+    # All C2960 switches
+    permit = 192\.168\.40\.24[1-7]
 }
 
 # Routers
