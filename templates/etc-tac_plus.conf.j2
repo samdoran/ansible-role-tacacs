@@ -44,6 +44,7 @@ host = 172.16.1.1 { enable = des {{ firewall_enable_password }} }
 # All network devices
 acl = all {
     permit = 192\.168\.40\.[0-9]+
+    permit = 10\.16\.5\.
     permit = 10\.255\.255\.
     permit = 192\.168\.23\.
     permit = 172\.16\.1\.1$
