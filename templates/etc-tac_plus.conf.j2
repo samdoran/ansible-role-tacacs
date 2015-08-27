@@ -8,7 +8,6 @@ key = "{{ tacacs_key }}"
 
 # --- Network Access Servers --- #
 
-# Host-specific configuration
 # Cisco 2911s
 host = 10.255.255.26 { key = "{{ c2911_key }}" }
 host = 10.255.255.27 { key = "{{ c2911_key }}" }
@@ -28,8 +27,10 @@ host = 10.255.255.10 { key = "{{ c3750_key }}" }
 # An enable password must be set for the firewalls
 # Use tac_pwd to generate a des encrypted password string
 #
-# PIX
-host = 172.16.1.1 { enable = des {{ firewall_enable_password }} }
+{% for item in tacacs_enable_passwords %}
+host = {{ item.name }} { enable = {{ item.auth_mechanism }} {{ item.password}} }
+{% endfor %}
+
 
 
 
@@ -41,8 +42,9 @@ host = 172.16.1.1 { enable = des {{ firewall_enable_password }} }
 acl = all {
     permit = 192\.168\.40\.[0-9]+
     permit = 10\.16\.5\.
+    permit = 10\.15\.30\.
     permit = 10\.255\.255\.
-    permit = 192\.168\.23\.
+    permit = 192\.168\.2[35]\.
     permit = 172\.16\.1\.1$
 }
 
