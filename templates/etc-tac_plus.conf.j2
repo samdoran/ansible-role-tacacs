@@ -280,5 +280,8 @@ group = scanner {
 user = {{ item.name }} {
     login = PAM
     member = {{ item.group }}
+{% if item.expires is defined %}
+    expires = "{{ item.expires }}"
+{% endif %}
 }
 {% endfor %}
