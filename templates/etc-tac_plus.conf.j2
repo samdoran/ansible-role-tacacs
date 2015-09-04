@@ -40,12 +40,7 @@ host = {{ item.name }} { enable = {{ item.auth_mechanism }} {{ item.password}} }
 
 # All network devices
 acl = all {
-    permit = 192\.168\.40\.[0-9]+
-    permit = 10\.16\.5\.
-    permit = 10\.15\.30\.
-    permit = 10\.255\.255\.
-    permit = 192\.168\.2[35]\.
-    permit = 172\.16\.1\.1$
+    permit = .*
 }
 
 # Access layer switches
