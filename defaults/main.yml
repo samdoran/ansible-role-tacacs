@@ -3,6 +3,13 @@ tacacs_port: 49
 
 # User accounts in /etc/tac_plus.conf
 # group needs to match a group defined in /etc/tac_plus.conf
-tacacs_config_users:
+
+tacacs_users:
   - name: rancid
-    group: reader
+    conifg_group: reader            # used in tac_plus.conf, not system group
+    config_expires: "Oct 30, 2015"  # Optional, used in tac_plus.conf, not system account expiration
+    full_name: RANCID               # Optional
+    shell: /bin/rbash               # Optional, default /bin/rbash
+    state: present                  # Optional, default present
+    password: '!!'                  # Optional, needs to be valid salted hash. Should be stored in Ansible vault.
+    update_password: on_create      # Optional, default on_create

@@ -47,3 +47,14 @@
     dest: /etc/shells
     line: '/bin/rbash'
   tags: [ 'config' ]
+
+- name: Setup user accounts
+  user:
+    name: "{{ item.name }}"
+    comment: "{{ item.full_name | default('') }}"
+    shell: "{{ item.shell | default('/bin/rbash') }}"
+    state: "{{ item.state | default('present') }}"
+    password: "{{ item.password | default('!!') }}"
+    update_password: "{{ item.update_password | default('on_create') }}"
+  with_items: tacacs_users
+  tags: [ 'tacacs', 'users' ]
