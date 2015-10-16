@@ -1,25 +1,49 @@
 ---
 - name: Copy nux-misc repo
-  copy: src=nux-misc.repo dest=/etc/yum.repos.d/nux-misc.repo owner=root group=root mode=0644
+  copy:
+    src: nux-misc.repo
+    dest: /etc/yum.repos.d/nux-misc.repo
+    owner: root
+    group: root
+    mode: 0644
   tags: [ 'tacacs' , 'yum' , 'nux' ]
 
 - name: Install tac_plus
-  yum: name=tac_plus enablerepo=nux-misc state=present
+  yum:
+    name: tac_plus
+    enablerepo: nux-misc
+    state: present
   tags: [ 'tacacs' , 'yum' ]
 
 - name: Enable tac_plus
-  service: name=tac_plus enabled=yes
+  service:
+    name: tac_plus
+    enabled: yes
   tags: [ 'tacacs' ]
 
 - name: Copy tacacas config
-  template: src=etc-tac_plus.conf.j2 dest=/etc/tac_plus.conf owner=root group=root mode=0640
+  template:
+    src: etc-tac_plus.conf.j2
+    dest: /etc/tac_plus.conf
+    owner: root
+    group: root
+    mode: 0640
   notify: restart tac_plus
   tags: [ 'tacacs' , 'tacacsconfig' ]
 
 - name: Setup rbash
-  file: state=link src=/bin/bash dest=/bin/rbash owner=root group=root mode=0755
+  file:
+    state: link
+    src: /bin/bash
+    dest: /bin/rbash
+    owner: root
+    group: root
+    mode: 0755
   tags: [ 'config' ]
 
 - name: Add rbash to /etc/shells
-  lineinfile: state=present dest=/etc/shells line='/bin/rbash'
+  lineinfile:
+    state: present
+    dest: /etc/shells
+    line: '/bin/rbash'
   tags: [ 'config' ]

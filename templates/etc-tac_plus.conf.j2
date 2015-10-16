@@ -5,7 +5,6 @@ accounting file = /var/log/tacacs_acct.log
 key = "{{ tacacs_key }}"
 
 
-
 # --- Network Access Servers --- #
 
 # Cisco 2911s
@@ -32,11 +31,7 @@ host = {{ item.name }} { enable = {{ item.auth_mechanism }} {{ item.password}} }
 {% endfor %}
 
 
-
-
 # --- ACLs --- #
-
-# Broken up by type of device
 
 # All network devices
 acl = all {
@@ -48,35 +43,6 @@ acl = access_switches {
     # All C2960 switches
     permit = 192\.168\.40\.24[1-7]
 }
-
-# Routers
-acl = routers {
-    # 2911 Voice Gateway router
-    permit = 192\.168\.40\.3
-
-    # C3750
-    permit = 10\.255\.255\.6$
-
-    # 2911s at Peak 10
-    permit = 10\.255\.255\.2[67]$
-}
-
-# Firewalls
-acl = firewalls {
-    permit = 192\.168\.40\.
-    permit = 172\.16\.1\.1$
-}
-
-# N5Ks
-acl = n5ks {
-    permit = 192\.168\.40\.
-}
-
-# UCS Fabric Extenders
-acl = ucsfx {
-    permit = 192\.168\.40\.
-}
-
 
 
 # --- Groups --- #
@@ -146,82 +112,6 @@ group = access_admin {
         permit "switchport (access vlan|mode access).*"
         permit "desc(ription).*"
     }
-}
-
-group = router_admin {
-    default service = permit
-    login = PAM
-    acl = routers
-
-    # Default login exec level
-    service = exec {
-      priv-lvl = 15
-    }
-
-    # Basic commands
-    cmd = enable { permit .* }
-    cmd = exit { permit .* }
-    cmd = end { permit .* }
-    cmd = configure { permit .* }
-
-    # Group specific commands
-}
-
-group = firewall_admin {
-    default service = deny
-    login = PAM
-    acl = firewalls
-
-    # Default login exec level
-    service = exec {
-      priv-lvl = 15
-    }
-
-    # Basic commands
-    cmd = enable { permit .* }
-    cmd = exit { permit .* }
-    cmd = end { permit .* }
-    cmd = configure { permit .* }
-
-    # Group specific commands
-}
-
-group = n5k_admin {
-    default service = deny
-    login = PAM
-    acl = n5ks
-
-    # Default login exec level
-    service = exec {
-      priv-lvl = 15
-    }
-
-    # Basic commands
-    cmd = enable { permit .* }
-    cmd = exit { permit .* }
-    cmd = end { permit .* }
-    cmd = configure { permit .* }
-
-    # Group specific commands
-}
-
-group = ucs_admin {
-    default service = deny
-    login = PAM
-    acl = ucsfx
-
-    # Default login exec level
-    service = exec {
-      priv-lvl = 15
-    }
-
-    # Basic commands
-    cmd = enable { permit .* }
-    cmd = exit { permit .* }
-    cmd = end { permit .* }
-    cmd = configure { permit .* }
-
-    # Group specific commands
 }
 
 group = reader {
