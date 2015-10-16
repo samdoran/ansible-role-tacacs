@@ -29,7 +29,7 @@
     group: root
     mode: 0640
   notify: restart tac_plus
-  tags: [ 'tacacs' , 'tacacsconfig' ]
+  tags: [ 'tacacs' , 'tacacsconfig', 'tacacsusers' ]
 
 - name: Setup rbash
   file:
@@ -47,3 +47,15 @@
     dest: /etc/shells
     line: '/bin/rbash'
   tags: [ 'config' ]
+
+- name: Setup user accounts
+  user:
+    name: "{{ item.name }}"
+    comment: "{{ item.full_name | default('') }}"
+    shell: "{{ item.shell | default('/bin/rbash') }}"
+    state: "{{ item.state | default('present') }}"
+    remove: "{{ item.remove | default('yes') }}"
+    password: "{{ item.password | default('!!') }}"
+    update_password: "{{ item.update_password | default('on_create') }}"
+  with_items: tacacs_users
+  tags: [ 'tacacs', 'tacacsconfig', 'tacacsusers' ]

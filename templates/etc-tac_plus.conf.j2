@@ -161,12 +161,14 @@ group = scanner {
 
 
 # --- Users --- #
-{% for item in tacacs_config_users %}
+{% for item in tacacs_users %}
+{% if item.state == 'present' %}
 user = {{ item.name }} {
     login = PAM
-    member = {{ item.group }}
+    member = {{ item.config_group }}
 {% if item.expires is defined %}
-    expires = "{{ item.expires }}"
+    expires = "{{ item.config_expires }}"
 {% endif %}
 }
+{% endif %}
 {% endfor %}
