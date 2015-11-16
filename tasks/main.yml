@@ -48,7 +48,7 @@
     line: '/bin/rbash'
   tags: [ 'config' ]
 
-- name: Setup user accounts
+- name: Setup local user accounts
   user:
     name: "{{ item.name }}"
     comment: "{{ item.full_name | default('') }}"
@@ -58,4 +58,5 @@
     password: "{{ item.password | default('!!') }}"
     update_password: "{{ item.update_password | default('on_create') }}"
   with_items: tacacs_users
+  when: item.local_account
   tags: [ 'tacacs', 'tacacsconfig', 'tacacsusers' ]
