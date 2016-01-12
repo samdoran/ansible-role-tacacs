@@ -15,12 +15,11 @@ Open port 49 in the firewall on the host.
 Role Variables
 --------------
 
+| Name              | Default Value       | Description          |
+|-------------------|---------------------|----------------------|
+| `tacacs_port` | `49` | Port the TACACS server listens on. |
+| `tacacs_users` | `[see defaults.yml]` | User accounts to  be added to `tac_plus.conf` and optionally created on the system. |
 
-
-Dependencies
-------------
-
-None
 
 Example Playbook
 -------------------------
@@ -29,7 +28,7 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: tacacs
       roles:
-         - { role: username.rolename, x: 42 }
+         - tacacs
 
 License
 -------
