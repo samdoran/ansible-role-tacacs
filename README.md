@@ -19,6 +19,8 @@ Role Variables
 |-------------------|---------------------|----------------------|
 | `tacacs_port` | `49` | Port the TACACS server listens on. |
 | `tacacs_users` | `[see defaults.yml]` | User accounts to  be added to `tac_plus.conf` and optionally created on the system. |
+| `tacacs_ldap_auth` | `False` | Whether TACACS uses PAM LDAP to authenticate. |
+| `tacacs_enable_passwords` | `null` | Host specific enable passwords. |
 
 
 Example Playbook

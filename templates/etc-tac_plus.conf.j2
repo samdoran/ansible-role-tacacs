@@ -8,19 +8,19 @@ key = "{{ tacacs_key }}"
 # --- Network Access Servers --- #
 
 # Cisco 2911s
-host = 10.255.255.26 { key = "{{ c2911_key }}" }
-host = 10.255.255.27 { key = "{{ c2911_key }}" }
+host = 10.255.255.26 { key = "{{ tacacs_c2911_key }}" }
+host = 10.255.255.27 { key = "{{ tacacs_c2911_key }}" }
 
 # Cisco Catalyst 2960s
-host = 192.168.40.241 { key = "{{ c2960_key }}" }
-host = 192.168.40.242 { key = "{{ c2960_key }}" }
-host = 192.168.40.243 { key = "{{ c2960_key }}" }
-host = 192.168.40.244 { key = "{{ c2960_key }}" }
-host = 192.168.40.245 { key = "{{ c2960_key }}" }
-host = 192.168.40.246 { key = "{{ c2960_key }}" }
+host = 192.168.40.241 { key = "{{ tacacs_c2960_key }}" }
+host = 192.168.40.242 { key = "{{ tacacs_c2960_key }}" }
+host = 192.168.40.243 { key = "{{ tacacs_c2960_key }}" }
+host = 192.168.40.244 { key = "{{ tacacs_c2960_key }}" }
+host = 192.168.40.245 { key = "{{ tacacs_c2960_key }}" }
+host = 192.168.40.246 { key = "{{ tacacs_c2960_key }}" }
 
 # Cisco Catalyst 3750
-host = 10.255.255.10 { key = "{{ c3750_key }}" }
+host = 10.255.255.10 { key = "{{ tacacs_c3750_key }}" }
 
 ## Cisco Firewalls
 # An enable password must be set for the firewalls
@@ -166,8 +166,11 @@ group = scanner {
 user = {{ item.name }} {
     login = PAM
     member = {{ item.config_group }}
-{% if item.expires is defined %}
+{% if item.config_expires is defined %}
     expires = "{{ item.config_expires }}"
+{% endif %}
+{% if item.enable is defined %}
+    enable = "{{ item.enable }}"
 {% endif %}
 }
 {% endif %}
