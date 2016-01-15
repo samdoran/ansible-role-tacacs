@@ -1,7 +1,7 @@
 TACACS+
 ========
 
-Setup a TACACS+ server using `[tac_plus](http://www.shrubbery.net/tac_plus/)` from Shrubbery Networks.
+Setup a TACACS+ server using [`tac_plus`](http://www.shrubbery.net/tac_plus/) from Shrubbery Networks.
 
 You may use local accounts or LDAP for authentication (via PAM). LDAP _does not_ do authorization — that is handled by the `tac_plus.conf`. If using LDAP authentication, make sure to define all the necessary variables described below.
 
