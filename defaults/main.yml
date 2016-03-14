@@ -1,5 +1,6 @@
 ---
 tacacs_port: 49
+tacacs_ldap_auth: False
 
 # User accounts in /etc/tac_plus.conf
 # group needs to match a group defined in /etc/tac_plus.conf
@@ -13,3 +14,9 @@ tacacs_users:
     state: present                  # Optional, default present
     password: '!!'                  # Optional, needs to be valid salted hash. Should be stored in Ansible vault.
     update_password: on_create      # Optional, default on_create
+    # enable: ""                    # Optional, des password hash used for user specific enable password generated with tac_pwd. Should be stored in Ansible vault.
+
+tacacs_enable_passwords: []
+  # - name: 192.168.1.1
+  #   auth_mechanism: des
+  #   password: ""                  # Generate a password hash with tac_pwd. Should be stored in Ansible vault.

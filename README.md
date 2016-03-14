@@ -1,38 +1,38 @@
-Role Name
+TACACS+
 ========
 
-A brief description of the role goes here.
+Setup a TACACS+ server using [`tac_plus`](http://www.shrubbery.net/tac_plus/) from Shrubbery Networks.
+
+You may use local accounts or LDAP for authentication (via PAM). LDAP _does not_ do authorization — that is handled by the `tac_plus.conf`. If using LDAP authentication, make sure to define all the necessary variables described below.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+You must configure your devices to point at the TACACS+ server. The exact configuration varies greatly between devices and vendors. You'll need to do lots of reading and testing with non-production equipment as it's very easy to lock yourself out of the device when experimenting with AAA configurations.
+
+Open port 49 in the firewall on the host.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+| Name              | Default Value       | Description          |
+|-------------------|---------------------|----------------------|
+| `tacacs_port` | `49` | Port the TACACS server listens on. |
+| `tacacs_users` | `[see defaults.yml]` | User accounts to  be added to `tac_plus.conf` and optionally created on the system. |
+| `tacacs_ldap_auth` | `False` | Whether TACACS uses PAM LDAP to authenticate. |
+| `tacacs_enable_passwords` | `null` | Host specific enable passwords. |
 
-Dependencies
-------------
-
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
 
 Example Playbook
 -------------------------
 
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-    - hosts: servers
+    - hosts: tacacs
       roles:
-         - { role: username.rolename, x: 42 }
+         - tacacs
 
 License
 -------
 
-BSD
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+MIT
